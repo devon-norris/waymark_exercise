@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Select, SelectProps, Divider } from 'antd'
+import { Select, SelectProps } from 'antd'
 import { STATE_MAP, MAX_STATES_SHOWN } from '../constants'
 import { StateCode } from '../types'
 import { useAppContext } from '../appContext'
@@ -42,7 +42,6 @@ export default function Header() {
         options={stateOptions}
       />
       <p style={{ fontStyle: 'italic', fontSize: '0.85rem' }}>Select up to 5 states at a time</p>
-      <Divider />
     </div>
   )
 }
