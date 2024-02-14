@@ -8,6 +8,7 @@ export interface State {
 export interface AppContextType {
   selectedStates: StateCode[]
   setSelectedStates: (selectedStates: StateCode[]) => void
+  removeState: (stateCode: StateCode) => void
 }
 
 export interface AppContextState {

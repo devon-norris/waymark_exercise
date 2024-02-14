@@ -4,7 +4,7 @@ import StateCard from './StateCard'
 import { reorderList } from '../helpers'
 
 export default function StateCardList() {
-  const { selectedStates, setSelectedStates } = useAppContext()
+  const { selectedStates, setSelectedStates, removeState } = useAppContext()
 
   const handleDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) {
@@ -30,7 +30,7 @@ export default function StateCardList() {
                     {...draggableProvided.draggableProps}
                     {...draggableProvided.dragHandleProps}
                   >
-                    <StateCard stateCode={stateCode} />
+                    <StateCard stateCode={stateCode} removeState={removeState} />
                   </div>
                 )}
               </Draggable>
