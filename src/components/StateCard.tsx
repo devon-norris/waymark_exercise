@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useReducer } from 'react'
+import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { Card, Radio, RadioChangeEvent, Tooltip } from 'antd'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { StateCode, StateCovidData } from '../types'
 import { fetchStateCovidData } from '../api'
 import { STATE_MAP } from '../constants'
 import StateDataChart from './StateDataChart'
+import StateDateDataBlock from './StateDateDataBlock'
 
 interface ReducerState {
   data: StateCovidData[] | null
   loading: boolean
   metric: 'cases' | 'hospitalizations'
+  dateData: StateCovidData | null
 }
 
 interface StateCardProps {
@@ -18,12 +20,12 @@ interface StateCardProps {
 }
 
 export default function StateCard({ stateCode, removeState }: StateCardProps) {
-  const [{ data, loading, metric }, setState] = useReducer(
+  const [{ data, loading, metric, dateData }, setState] = useReducer(
     (prevState: ReducerState, newState: Partial<ReducerState>) => ({
       ...prevState,
       ...newState,
     }),
-    { data: null, loading: false, metric: 'cases' }
+    { data: null, loading: false, metric: 'cases', dateData: null }
   )
 
   useEffect(() => {
@@ -50,7 +52,13 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
       chartDataMap,
     }
   }, [data, metric])
-  console.log('chartDataMap:', chartDataMap) // TODO
+
+  const handleHoverDate = useCallback(
+    (date: string) => {
+      setState({ dateData: chartDataMap[date] || null })
+    },
+    [setState, chartDataMap]
+  )
 
   const handleToggleMetric = (event: RadioChangeEvent) => {
     setState({ metric: event.target.value })
@@ -62,9 +70,9 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
 
   return (
     <Card bodyStyle={{ padding: '16px' }}>
-      <div style={{ height: '300px', minWidth: '1200px', display: 'flex' }}>
-        <div style={{ width: '250px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', gap: '16px', marginLeft: '8px' }}>
+      <div style={{ height: '300px', minWidth: '1200px', display: 'flex', textAlign: 'left' }}>
+        <div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', gap: '16px' }}>
             <Tooltip title="Remove State">
               <DeleteTwoTone
                 twoToneColor="red"
@@ -84,14 +92,10 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
             value={metric}
             onChange={handleToggleMetric}
           />
-          <ul>
-            <li>Data Point 1</li>
-            <li>Data Point 2</li>
-            <li>Data Point 3</li>
-          </ul>
+          <StateDateDataBlock data={dateData} />
         </div>
         <div style={{ width: '100%' }}>
-          <StateDataChart data={chartData} loading={loading} metric={metric} onDateHover={() => {}} />
+          <StateDataChart data={chartData} loading={loading} metric={metric} onDateHover={handleHoverDate} />
         </div>
       </div>
     </Card>
