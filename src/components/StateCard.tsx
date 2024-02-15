@@ -66,6 +66,7 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
                 twoToneColor="red"
                 style={{ cursor: 'pointer', fontSize: '1.5em' }}
                 onClick={handleRemoveState}
+                data-testid={`remove-state-${stateCode}`}
               />
             </Tooltip>
             <h2>{STATE_MAP[stateCode].name}</h2>
@@ -79,10 +80,11 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
             ]}
             value={metric}
             onChange={handleToggleMetric}
+            data-testid={`metric-toggle-${stateCode}`}
           />
           <StateDateDataBlock data={dateData} />
         </div>
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%' }} data-testid={`data-chart-${stateCode}`}>
           <StateDataChart
             data={chartData}
             loading={loading}
