@@ -1,9 +1,10 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { render, screen } from '@testing-library/react'
+import App from './App'
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+test('renders app container', () => {
+  render(<App />)
+
+  expect(screen.getByTestId('app-container')).toBeVisible()
+  expect(screen.getByTestId('header')).toBeVisible()
+  expect(screen.getByTestId('state-card-list')).toBeVisible()
+})

@@ -5,7 +5,7 @@ import StateCardList from './components/StateCardList'
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="App" data-testid="app-container">
       <Header />
       <Divider />
       <StateCardList />

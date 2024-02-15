@@ -19,6 +19,7 @@ export default function StateCardList() {
       <Droppable droppableId="stateList">
         {(droppableProvided) => (
           <div
+            data-testid="state-card-list"
             ref={droppableProvided.innerRef}
             style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '32px' }}
           >

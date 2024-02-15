@@ -31,7 +31,7 @@ export default function Header() {
   }, [selectedStates, setStateOptions])
 
   return (
-    <div>
+    <div data-testid="header">
       <h2>COVID-19 U.S. state data</h2>
       <p>
         Select states to view corresponding historical COVID-19 data. Drag state graphs to rearrange and compare data.
