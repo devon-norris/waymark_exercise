@@ -1,5 +1,5 @@
-import { StateCovidData } from './types'
-import { reorderList, formatStateCovidData, calculateNewCaseRollingAverage, composeChartData } from './helpers'
+import { StateCovidData } from '../types'
+import { reorderList, formatStateCovidData, calculateNewCaseRollingAverage, composeChartData } from '../helpers'
 
 const mockCovidData1 = { date: '2020-04-01', cases: { total: 200 } } as StateCovidData
 const mockCovidData2 = { date: '2020-04-02', cases: { total: 300 } } as StateCovidData

@@ -55,7 +55,10 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
 
   return (
     <Card bodyStyle={{ padding: '16px' }}>
-      <div style={{ height: CHART_HEIGHT, minWidth: '1200px', display: 'flex', textAlign: 'left' }}>
+      <div
+        style={{ height: CHART_HEIGHT, minWidth: '1200px', display: 'flex', textAlign: 'left' }}
+        data-testid={`state-card-${stateCode}`}
+      >
         <div style={{ width: 300, display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', gap: '16px' }}>
             <Tooltip title="Remove State">

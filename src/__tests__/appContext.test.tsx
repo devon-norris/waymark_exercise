@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { renderHook, act, waitFor } from '@testing-library/react'
-import { useAppContext, AppContextProvider } from './appContext'
+import { useAppContext, AppContextProvider } from '../appContext'
 
 const wrapper = ({ children }: { children: ReactNode }) => <AppContextProvider>{children}</AppContextProvider>
 

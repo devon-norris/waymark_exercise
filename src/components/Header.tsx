@@ -17,7 +17,9 @@ export default function Header() {
 
   const [stateOptions, setStateOptions] = useState<SelectProps['options']>(defaultStateOptions)
 
-  const handleChangeSelectedStates = (selectedStateCodes: StateCode[]) => setSelectedStates(selectedStateCodes)
+  const handleChangeSelectedStates = (selectedStateCodes: StateCode[]) => {
+    setSelectedStates(selectedStateCodes)
+  }
 
   useEffect(() => {
     // Handle setting other options as disabled if we hit the MAX_STATES_SHOWN
@@ -37,6 +39,7 @@ export default function Header() {
         Select states to view corresponding historical COVID-19 data. Drag state graphs to rearrange and compare data.
       </p>
       <Select
+        data-testid="state-select"
         mode="multiple"
         style={{ width: '600px' }}
         placeholder="Please select states"
