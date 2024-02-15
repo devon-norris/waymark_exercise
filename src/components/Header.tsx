@@ -1,32 +1,32 @@
-import { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Select, SelectProps } from 'antd'
 import { STATE_MAP, MAX_STATES_SHOWN } from '../constants'
 import { StateCode } from '../types'
 import { useAppContext } from '../appContext'
 
+const defaultStateOptions: SelectProps['options'] = Object.values(STATE_MAP).map(({ name, code }) => ({
+  label: name,
+  value: code,
+  disabled: false,
+}))
+
 export default function Header() {
   const { selectedStates, setSelectedStates } = useAppContext()
 
-  const [stateOptions, setStateOptions] = useState<SelectProps['options']>(
-    Object.values(STATE_MAP).map(({ name, code }) => ({ label: name, value: code }))
-  )
+  const [stateOptions, setStateOptions] = useState<SelectProps['options']>(defaultStateOptions)
 
-  const handleChangeSelectedStates = useCallback(
-    (selectedStateCodes: StateCode[]) => {
-      // Handle setting other options as disabled if we hit the MAX_STATES_SHOWN
-      const newStateOptions: SelectProps['options'] =
-        selectedStateCodes.length >= MAX_STATES_SHOWN
-          ? stateOptions?.map((state) => ({
-              ...state,
-              ...(!selectedStateCodes.includes(state.value as StateCode) && { disabled: true }),
-            }))
-          : stateOptions?.map((state) => ({ ...state, disabled: false }))
+  const handleChangeSelectedStates = (selectedStateCodes: StateCode[]) => setSelectedStates(selectedStateCodes)
 
-      setStateOptions(newStateOptions)
-      setSelectedStates(selectedStateCodes)
-    },
-    [stateOptions, setStateOptions, setSelectedStates]
-  )
+  useEffect(() => {
+    // Handle setting other options as disabled if we hit the MAX_STATES_SHOWN
+    const areMaxStatesSelected = selectedStates.length >= MAX_STATES_SHOWN
+    setStateOptions(
+      defaultStateOptions?.map((state) => ({
+        ...state,
+        disabled: areMaxStatesSelected && !selectedStates.includes(state.value as StateCode),
+      }))
+    )
+  }, [selectedStates, setStateOptions])
 
   return (
     <div>

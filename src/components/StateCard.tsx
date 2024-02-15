@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { Card, Radio, RadioChangeEvent, Tooltip } from 'antd'
 import { DeleteTwoTone } from '@ant-design/icons'
-import { StateCode, StateCovidData } from '../types'
+import { StateCode, StateCovidData, ChartMetric } from '../types'
 import { fetchStateCovidData } from '../api'
-import { STATE_MAP } from '../constants'
+import { STATE_MAP, CHART_HEIGHT } from '../constants'
+import { composeChartData } from '../helpers'
 import StateDataChart from './StateDataChart'
 import StateDateDataBlock from './StateDateDataBlock'
 
 interface ReducerState {
   data: StateCovidData[] | null
   loading: boolean
-  metric: 'cases' | 'hospitalizations'
+  metric: ChartMetric
   dateData: StateCovidData | null
 }
 
@@ -35,23 +36,7 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
       .finally(() => setState({ loading: false }))
   }, [stateCode])
 
-  const { chartData, chartDataMap } = useMemo(() => {
-    const chartData: { x: number; y: number }[] = []
-    const chartDataMap: Record<string, StateCovidData> = {}
-
-    for (const d of data || []) {
-      const timestamp = new Date(d.date).getTime()
-      chartDataMap[timestamp] = d
-
-      const yAxis = metric === 'cases' ? d.cases.total : d.outcomes.hospitalized.total
-      chartData.push({ x: timestamp, y: yAxis })
-    }
-
-    return {
-      chartData,
-      chartDataMap,
-    }
-  }, [data, metric])
+  const { chartData, chartDataMap } = useMemo(() => composeChartData({ data, metric }), [data, metric])
 
   const handleHoverDate = useCallback(
     (date: string) => {
@@ -70,8 +55,8 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
 
   return (
     <Card bodyStyle={{ padding: '16px' }}>
-      <div style={{ height: '300px', minWidth: '1200px', display: 'flex', textAlign: 'left' }}>
-        <div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ height: CHART_HEIGHT, minWidth: '1200px', display: 'flex', textAlign: 'left' }}>
+        <div style={{ width: 300, display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', gap: '16px' }}>
             <Tooltip title="Remove State">
               <DeleteTwoTone
@@ -95,7 +80,13 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
           <StateDateDataBlock data={dateData} />
         </div>
         <div style={{ width: '100%' }}>
-          <StateDataChart data={chartData} loading={loading} metric={metric} onDateHover={handleHoverDate} />
+          <StateDataChart
+            data={chartData}
+            loading={loading}
+            metric={metric}
+            onDateHover={handleHoverDate}
+            height={CHART_HEIGHT}
+          />
         </div>
       </div>
     </Card>

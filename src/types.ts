@@ -1,10 +1,5 @@
 export type StateCode = 'TN' | 'WA' | 'MD' | 'OH' | 'FL' | 'FL' | 'AZ' | 'WI' | 'RI' | 'GA' | 'KY'
 
-export interface State {
-  name: string
-  code: StateCode
-}
-
 export interface AppContextType {
   selectedStates: StateCode[]
   setSelectedStates: (selectedStates: StateCode[]) => void
@@ -36,7 +31,9 @@ export interface TestMetrics {
 
 export interface StateCovidData {
   date: string
+  timestamp: number
   state: StateCode
+  rollingAverage?: number
   cases: {
     confirmed: number
     probable: number
@@ -68,3 +65,5 @@ export interface StateCovidData {
     pcr: TestMetrics
   }
 }
+
+export type ChartMetric = 'cases' | 'hospitalizations'

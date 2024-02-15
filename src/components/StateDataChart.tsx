@@ -1,13 +1,15 @@
 import Chart from 'react-apexcharts'
+import { ChartMetric } from '../types'
 
 export interface StateDataChartProps {
   data: { x: number; y: number }[]
   loading: boolean
   onDateHover: (date: string) => void
-  metric: 'cases' | 'hospitalizations' // TODO: add to types
+  metric: ChartMetric
+  height: number
 }
 
-export default function StateDataChart({ data, loading, onDateHover, metric }: StateDataChartProps) {
+export default function StateDataChart({ data, loading, onDateHover, metric, height }: StateDataChartProps) {
   const noDataText = loading ? 'Loading...' : 'Unable to load data :('
   const seriesName = metric === 'cases' ? 'Total cases' : 'Total hospitalizations'
 
@@ -15,12 +17,13 @@ export default function StateDataChart({ data, loading, onDateHover, metric }: S
     <Chart
       options={{
         chart: {
-          height: 300,
+          height,
           width: '100%',
           type: 'line',
           zoom: { enabled: false },
           toolbar: { show: false },
         },
+        yaxis: [{ title: { text: seriesName } }],
         xaxis: {
           type: 'datetime',
           tooltip: {
@@ -42,7 +45,7 @@ export default function StateDataChart({ data, loading, onDateHover, metric }: S
         },
       ]}
       type="line"
-      height={300}
+      height={height}
     />
   )
 }
