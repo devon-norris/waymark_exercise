@@ -39,19 +39,13 @@ export default function StateCard({ stateCode, removeState }: StateCardProps) {
   const { chartData, chartDataMap } = useMemo(() => composeChartData({ data, metric }), [data, metric])
 
   const handleHoverDate = useCallback(
-    (date: string) => {
-      setState({ dateData: chartDataMap[date] || null })
-    },
+    (date: string) => setState({ dateData: chartDataMap[date] || null }),
     [setState, chartDataMap]
   )
 
-  const handleToggleMetric = (event: RadioChangeEvent) => {
-    setState({ metric: event.target.value })
-  }
+  const handleToggleMetric = (event: RadioChangeEvent) => setState({ metric: event.target.value })
 
-  const handleRemoveState = () => {
-    removeState(stateCode)
-  }
+  const handleRemoveState = () => removeState(stateCode)
 
   return (
     <Card bodyStyle={{ padding: '16px' }}>

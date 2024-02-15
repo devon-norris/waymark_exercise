@@ -14,7 +14,6 @@ const defaultStateOptions: SelectProps['options'] = Object.values(STATE_MAP)
 
 export default function Header() {
   const { selectedStates, setSelectedStates } = useAppContext()
-
   const [stateOptions, setStateOptions] = useState<SelectProps['options']>(defaultStateOptions)
 
   const handleChangeSelectedStates = (selectedStateCodes: StateCode[]) => {

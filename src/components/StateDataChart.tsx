@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import Chart from 'react-apexcharts'
 import { ChartMetric } from '../types'
 
@@ -12,6 +13,14 @@ export interface StateDataChartProps {
 export default function StateDataChart({ data, loading, onDateHover, metric, height }: StateDataChartProps) {
   const noDataText = loading ? 'Loading...' : 'Unable to load data :('
   const seriesName = metric === 'cases' ? 'Total cases' : 'Total hospitalizations'
+
+  const tooltipFormatter = useCallback(
+    (date: string) => {
+      onDateHover(date)
+      return ''
+    },
+    [onDateHover]
+  )
 
   return (
     <Chart
@@ -28,10 +37,7 @@ export default function StateDataChart({ data, loading, onDateHover, metric, hei
           type: 'datetime',
           tooltip: {
             enabled: false,
-            formatter: (val) => {
-              onDateHover(val)
-              return ''
-            },
+            formatter: tooltipFormatter,
           },
         },
         noData: {

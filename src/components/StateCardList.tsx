@@ -2,6 +2,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea
 import { useAppContext } from '../appContext'
 import StateCard from './StateCard'
 import { reorderList } from '../helpers'
+import { StateCode } from '../types'
 
 export default function StateCardList() {
   const { selectedStates, setSelectedStates, removeState } = useAppContext()
@@ -11,7 +12,9 @@ export default function StateCardList() {
       return
     }
 
-    setSelectedStates(reorderList({ list: selectedStates, startIndex: source.index, endIndex: destination.index }))
+    setSelectedStates(
+      reorderList<StateCode>({ list: selectedStates, startIndex: source.index, endIndex: destination.index })
+    )
   }
 
   return (
