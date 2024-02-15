@@ -26,7 +26,7 @@ export default function StateDateDataBlock({ data }: StateDateDataBlockProps) {
       {dataFields.map(({ label, path }) => (
         <div key={path}>
           <b>{label}: </b>
-          <span>{_get(data, path) || 'n/a'}</span>
+          <span>{_get(data, path) || 'unknown'}</span>
         </div>
       ))}
     </div>

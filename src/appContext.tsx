@@ -18,7 +18,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     { selectedStates: [] }
   )
 
-  const setSelectedStates = useCallback((states: StateCode[]) => setState({ selectedStates: states }), [setState])
+  const setSelectedStates = useCallback(
+    (states: StateCode[]) => {
+      setState({ selectedStates: states })
+    },
+    [setState]
+  )
 
   const removeState = useCallback(
     (stateCode: StateCode) => {
