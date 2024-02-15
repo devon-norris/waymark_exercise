@@ -41,3 +41,7 @@ Given more time, here is a list of enhancements I could add to improve user expe
 ## Notes
 
 - Given more time, I would have like to written some more robust tests. Some of the third party libraries I was using were proving difficult to test properly.
+
+## Example
+
+![image example](./example.png)
