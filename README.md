@@ -40,7 +40,11 @@ Given more time, here is a list of enhancements I could add to improve user expe
 
 ## Notes
 
-- Given more time, I would have like to written some more robust tests. Some of the third party libraries I was using were proving difficult to test properly.
+- The `App.tsx` file is the container for the app
+- The app is wrapped in a context provider (`index.tsx`) to provide common state values and functionality to child components
+- Individual components can be found in `src/components`
+- Helper functions, constants and types are abstracted into their own files
+- Given more time, I would like to write more robust tests. Some of the third party libraries I was using were proving difficult to test user experience properly.
 
 ## Example
 
